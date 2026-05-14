@@ -1,0 +1,57 @@
+<?
+include './admin/include/config.php';
+?>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<title>:::: <?=$AdmTitle?> ::::</title>
+
+<link href="../css/popup_css.css" rel="stylesheet" type="text/css"><!-- css 링크 -->
+<script>
+function init() {
+ 	window.resizeTo(document.body.scrollWidth+30,document.body.scrollHeight+55);
+	document.frm.pw.focus();
+}
+</script>
+</head>
+
+<body onLoad="init();" topmargin="0px" leftmargin="0px">
+<form name="frm" method="post" action="pw_proc.php">
+<input type="hidden" name="idx" value="<?=$idx?>">
+<input type="hidden" name="ref" value="<?=$ref?>">
+<input type="hidden" name="level" value="<?=$level?>">
+<input type="hidden" name="step" value="<?=$step?>">
+<input type="hidden" name="mode" value="<?=$mode?>">
+
+<!-- 가로400 / 세로 260 (창사이즈입니다.)-->
+<table width="400" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td height="100" valign="top"><img src="./images/bbs/pop_pass01.gif"></td>
+  </tr>
+  <tr>
+    <td height="45" background="./images/bbs/pop_pass02.gif"><table width="400" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="220">&nbsp;</td>
+        <td width="180"><input name="pw" type="password" class="dong_input" id="textfield" size="17"></td>
+        <!-- 우편번호 검색버튼-->
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="25" valign="bottom"><img src="./images/bbs/pop_pass03.gif"></td>
+  </tr>
+  <tr>
+    <td height="40" align="center"><table width="120" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><img src="./images/bbs/pop_pass_btn1.gif" style="cursor:hand" onClick="document.frm.submit();"></td>
+        <td width="8">&nbsp;</td>
+        <td><img src="./images/bbs/pop_pass_btn2.gif" style="cursor:hand" onClick="window.close();"></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="50" valign="bottom"><img src="./images/bbs/pop_pass04.gif"></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

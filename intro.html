@@ -1,0 +1,143 @@
+<?
+include './admin/include/config.php';
+?>
+<?
+	$query = "SELECT * FROM intro";
+	$result = mysql_query($query, $connect);
+	$list = mysql_fetch_array($result);
+?>
+<? include 'sub_header.html';?>		
+		<!-- 메인 바디 시작 -->
+			<table width="900" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td valign="top" width="201" valign="top">
+						<!-- 메인 좌측 시작-->
+
+						<table width="201" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top">
+									<SCRIPT>FlashView_t("./flash/sub_flash1.swf", 200, 100, 'sub_menu','transparent')</SCRIPT>
+								</td>
+							</tr>
+							<? include 'left.html';?>	
+						</table>
+
+						<!-- 메인 좌측 끝-->
+					</td>
+					<td width="24"></td>
+					<td valign="top" width="675" valign="top">
+						<!--메인우측 시작-->
+						
+						<table width="676" border="0" cellpadding="0" cellspacing="0">
+							<tr height="10">
+								<td></td>
+							</tr>
+							<tr height="24">
+								<td>
+									<table width="676" border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td width="22">
+												<img src="images/sub_title_dot.gif" alt="">
+											</td>
+											<td width="3"></td>
+											<td width="80" class="sub_title">
+												인사말
+											</td>
+											<td width="4">
+												<img src="images/sub_title_bar.gif" alt="">
+											</td>
+											<td align="right" class="sub_navi">
+												홈 > 한일소개 > 인사말
+											</td>
+										</tr>
+									</table>	
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<img src="images/sub_main_bar.gif" alt=""></td>
+							</tr>
+							<tr>
+								<td valign="top" align="center">
+									<!-- 서브 메인 시작 -->
+									
+									<table width="676" border="0" cellpadding="0" cellspacing="0">
+										<tr height="13">
+											<td></td>
+										</tr>
+										<tr>
+											<td valign="top">
+												<table width="646" border="0" cellpadding="0" cellspacing="0">
+													<tr>
+														<td width="9"></td>
+														<td>
+															<!--  서브 메인 이미지 시작 -->
+															<img src="images/3_02.gif" width="254" height="283" alt="">
+															<!--  서브 메인 이미지 끝 -->
+														</td>
+														<td valign="top">
+														<!-- 서브 내용 설명 시작 -->
+															<table width="383" border="0" cellpadding="0" cellspacing="0">
+																<tr height="17">
+																	<td></td>
+																</tr>
+																<tr>
+																	<td valign="top" height="36">
+																		<table width="383" border="0" cellpadding="0" cellspacing="0">
+																			<tr>
+																				<td>
+																					<table width="383" height="32" border="0" cellpadding="0" cellspacing="0">
+																						<tr>
+																							<td width="30">
+																								<img src="images/sub_content_title_dot.gif" height="32" alt=""></td>
+																							<td>
+																								<span class="sub_content_title_first">한</span><span class="sub_content_title">일양어장 소개</span>
+																							</td>
+																						</tr>
+																					</table>			
+																				</td>
+																			</tr>
+																			<tr>
+																				<td>
+																					<img src="images/sub_content_bar.gif" width="413" height="4" alt=""></td>
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+																<tr>
+																	<td valign="top">
+																		<table>
+																			<tr>
+																				<td width="30"></td>
+																				<td>
+																					<?
+																						$content=str_replace("\n","<br>",$list[content]);
+																						//$content=str_replace(" ","&nbsp;",$content);
+																					?>
+																					<?=$content?>																					
+																				</td>																			
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+															</table>	
+															<!-- 서브 내용 설명 끝 -->
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+									
+									<!-- 서브 메인 끝 -->
+								</td>
+							</tr>
+						</table>	
+
+						<!--메인우측 끝-->
+					</td>
+				</tr>
+			</table>
+		<!-- 메인 바디 끝 -->
+		
+<? include 'bottom.html';?>

@@ -1,0 +1,289 @@
+<? include './admin/include/config.php';?>
+<? include './admin/product/common.php';?>
+<?
+	$query = "SELECT * FROM $table where idx=$idx";
+	$result = mysql_query($query, $connect);
+	$list = mysql_fetch_array($result);
+	
+	$cate=$list[cate];	
+	
+	$query = "UPDATE $table SET hit=hit+1 WHERE idx=$idx";
+	$result = mysql_query($query, $connect);
+?>
+<? include 'sub_header.html';?>		
+<script>
+	function changePic(path){
+		var tStr="<img width='550' src='"+path+"'><br><br>";
+
+		document.getElementById('picDiv').innerHTML = tStr;
+	}
+</script>
+		<!-- 메인 바디 시작 -->
+			<table width="900" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td valign="top" width="201" valign="top">
+						<!-- 메인 좌측 시작-->
+
+						<table width="201" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top">
+								<?
+									if($cate<9){
+								?>
+									<SCRIPT>FlashView_t("./flash/sub_flash2.swf", 200, 245, 'sub_menu','transparent')</SCRIPT>
+								<?
+									}else{
+								?>
+									<SCRIPT>FlashView_t("./flash/sub_flash3.swf", 200, 100, 'sub_menu','transparent')</SCRIPT>
+								<?
+									}
+								?>
+								</td>
+							</tr>
+							<? include 'left.html';?>	
+						</table>
+
+						<!-- 메인 좌측 끝-->
+					</td>
+					<td width="24"></td>
+					<td valign="top" width="675" valign="top">
+						<!--메인우측 시작-->
+						
+						<table width="676" border="0" cellpadding="0" cellspacing="0">
+							<tr height="10">
+								<td></td>
+							</tr>
+							<tr height="24">
+								<td>
+									<table width="676" border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td width="22">
+												<img src="images/sub_title_dot.gif" alt="">
+											</td>
+											<td width="3"></td>
+											<td width="80" class="sub_title">
+												<?=$title?>
+											</td>
+											<td width="4">
+												<img src="images/sub_title_bar.gif" alt="">
+											</td>
+											<td width="12"></td>
+											<td class="product_subject">
+												<?=$list[subject]?>
+											</td>
+											<td align="right" class="sub_navi">
+												홈 > 관상어류 및 수생식물 > <?=$title?>
+											</td>
+										</tr>
+									</table>	
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<img src="images/sub_main_bar.gif" alt=""></td>
+							</tr>
+							<tr>
+								<td valign="top" align="center">
+									<!-- 서브 메인 시작 -->
+									
+									
+									 <table width="650" border="0" cellspacing="0" cellpadding="0">
+									  <tr>
+										<td>&nbsp;</td>
+									  </tr>
+									  <tr>
+										<td height="5" background="./images/bbs/bod_line01.gif"></td>
+									  </tr>
+									  <tr>
+										<!-- 제목 보여짐 -->
+										<td height="30" align="center" class="board_title , gray_1px"><?=$list[subject]?></td>
+									  </tr>
+									  <tr>
+										<td height="30" valign="bottom" class="gray_1px" style="padding-bottom:4"><table width="650" border="0" cellspacing="0" cellpadding="0">
+										  <tr align="center">
+											<td width="115" align="center"><span class="date2">date /</span> <span class="date1"><?=substr($list[regdate],0,10)?></span></td>
+											<td width="45" align="right">hit / <span class="date1"><?=$list[hit]?></span></td>
+											<td width="340" align="center">&nbsp;</td>
+											<td width="150">글쓴이 : <?=$list[name]?></td>
+										  </tr>
+										</table></td>
+									  </tr>
+									   <tr>
+										<td align="center">
+											<table>
+												<tr>
+													<?
+													$path="path";
+													for($i=1;$i<6;$i++){
+														if($list[$path.$i]){
+													?>
+													<td width="110" align="center">
+														<img src="./files/<?=$cate?>/<?=urlencode($list[$path.$i])?>" width="110" style="cursor:hand"  onMouseOver="changePic('./files/<?=$cate?>/<?=urlencode($list[$path.$i])?>');">
+													</td><td width="10"></td>
+													<?
+														}else{
+													?>
+													<td width="110" align="center"></td><td width="10"></td>
+													<?
+														}
+													}
+													?>
+													
+												</tr>
+											</table>
+										</td>
+									  </tr>
+									  <tr height="5"><td></td></tr>
+
+										<?
+											if($list[mov]){
+										?>
+									 <tr>
+										<td align="center">
+											<table width="90%">	
+												<tr><td>
+													<embed nomenu="true" autostart="true" showcontrols="true" src="./files/<?=$cate?>/<?=$list[mov]?>"></embed>
+												</td></tr>
+											</table>
+											<table width="90%">	
+												<tr><td align="right">
+													만약 상단에 Window Media Player 추가기능을 실행하려고 한다는 안내가 보이실 경우,<br> 해당 안내를 클릭하시고 Active X 가 실행되도록 선택하시면 동영상이 재생됩니다.
+												</td></tr>
+											</table>
+										</td>
+									  </tr>
+									  <tr height="5"><td></td></tr>
+										<?
+											}
+										?>
+
+
+									  <tr>
+										<td height="30"  style="padding:15" align="center">
+											<div id="picDiv" style="overflow-y:scroll;"></div>
+										<?
+											if($list[path1]){
+												//echo "<img src=\"./files/$cate/".urlencode($list[path1])."\" width=\"550\">";
+												echo "<script>changePic(\"./files/$cate/".urlencode($list[path1]) ."\");</script>";
+											}
+										?>
+										</td>
+									  </tr>
+									  <tr>
+										<td align="center">
+											<table width="90%">	
+												<tr><td>
+											<?
+												$content=str_replace("\n","<br>",$list[content]);
+												//$content=str_replace(" ","&nbsp;",$content);
+											?>
+											<?=$content?>
+												</td></tr>
+											</table>
+										</td>
+									  </tr>
+									  <tr height="5"><td></td></tr>
+									 
+								  <tr>
+										<td height="5" background="./images/bbs/bod_line01.gif"></td>
+									  </tr>
+								  <?
+									$query = "SELECT * FROM $table WHERE cate=$cate AND idx<$idx ORDER BY idx DESC";
+									$result = mysql_query($query, $connect);
+									$list = mysql_fetch_array($result);
+									
+									if($list){
+								?>
+								  <tr>
+									 <td height="30" class="gray_1px">
+										<table width="650" height="19" border="0" cellspacing="0" cellpadding="0">
+										  <tr>
+											<td width="60"><img src="./images/bbs/bod_prev.gif"></td>
+											<td valign="bottom"><a href="<?=$PHP_SELF?>?page=<?=$page?>&idx=<?=$list[idx]?>"><?=$list[subject]?></a></td>
+											<td  width="11" valign="bottom"><img src="./images/bbs/bod_line05.gif"></td>
+											<td width="130" valign="bottom"><?=$list[name]?></td>
+										  </tr>
+										</table>
+									</td>
+								  </tr>
+								<?
+									}else{
+								?>
+								  <tr>
+									 <td height="30" class="gray_1px">
+										<table width="650" height="19" border="0" cellspacing="0" cellpadding="0">
+										  <tr>
+										<td>첫번째 글입니다.</td>
+									  </tr>
+									</table>
+									</td>
+								  </tr>
+								<?
+									}
+
+									$query = "SELECT * FROM $table WHERE cate=$cate AND  idx>$idx ORDER BY idx";
+									$result = mysql_query($query, $connect);
+									$list = mysql_fetch_array($result);
+									
+									if($list){
+								?>
+								  
+								<tr>
+									<td height="30">
+											<table width="650" height="19" border="0" cellspacing="0" cellpadding="0">
+											  <tr>
+												<td width="60"><img src="./images/bbs/bod_next.gif"></td>
+												<td valign="bottom"><a href="<?=$PHP_SELF?>?page=<?=$page?>&idx=<?=$list[idx]?>"><?=$list[subject]?></a></td>
+												<td  width="11" valign="bottom"><img src="./images/bbs/bod_line05.gif"></td>
+												<td width="130" valign="bottom"><?=$list[name]?></td>
+											  </tr>
+											</table>
+										</td>
+								  </tr>
+
+								<?
+									}else{
+								?>
+								  <tr>
+									<td height="30">
+											<table width="650" height="19" border="0" cellspacing="0" cellpadding="0">
+									  <tr>
+										<td class="board02">마지막 글입니다.</td>
+									  </tr>
+									</table>
+									</td>
+								  </tr>
+								<?
+									}
+								?>
+							<tr>
+								<td height="5" background="./images/bbs/bod_line02.gif"></td>
+							  </tr>
+
+									  <tr>
+										<td height="30" align="right"><table width="650" border="0" cellspacing="0" cellpadding="0">
+										  <tr>
+											  <!-- 목록으로 가기 버튼-->
+											<td align="center"><img src="./images/bbs/bod_list.gif" style="cursor:hand" onClick="location.href='product.html?page=<?=$page?>&cate=<?=$cate?>'"></td>
+										  </tr>
+										</table></td>
+									  </tr>
+									  <tr>
+										<td height="20" align="center">&nbsp;</td>
+									  </tr>
+									</table>
+									<!-- 게시판 보기 페이지  끝 -->
+
+
+									<!-- 서브 메인 끝 -->
+								</td>
+							</tr>
+						</table>	
+
+						<!--메인우측 끝-->
+					</td>
+				</tr>
+			</table>
+		<!-- 메인 바디 끝 -->
+		
+<? include 'bottom.html';?>

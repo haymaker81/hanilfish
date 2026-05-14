@@ -1,0 +1,323 @@
+<? include './admin/include/config.php';?>
+<?
+	$table="photo";
+	if(!$page){
+		$page=1;
+	}
+	
+	if(!$search){
+		$search="subject";
+	}
+
+	//이미지 목록이므로 $listPerPage 재정의
+	$listPerPage=8;
+	
+	$query = "SELECT COUNT(idx) FROM $table WHERE visible='1' AND  $search LIKE '%$searchkey%'";
+	//echo $query."<br>";
+	$result = mysql_query($query, $connect);
+	$res = mysql_fetch_row($result);
+
+	$t_count=$res[0];
+
+	$start=($page-1)*$listPerPage;
+	if($t_count%$listPerPage==0){
+		$lastpage=intval($t_count/$listPerPage);
+	}else{
+		$lastpage=intval($t_count/$listPerPage)+1;
+	}
+//	echo $lastpage;
+	$query = "SELECT idx,name,subject,path1,hit,regdate  \n";
+	$query.= "FROM $table \n";
+	$query.= "WHERE  visible='1' AND  \n";
+	$query.= " $search LIKE '%$searchkey%' \n";
+	$query.= "ORDER BY idx DESC LIMIT $start,$listPerPage";
+	//echo $query."<br>";
+	$result = mysql_query($query, $connect);
+?>
+<? include 'sub_header.html';?>		
+		<!-- 메인 바디 시작 -->
+			<table width="900" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td valign="top" width="201" valign="top">
+						<!-- 메인 좌측 시작-->
+
+						<table width="201" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top">
+									<SCRIPT>FlashView_t("./flash/sub_flash5.swf", 200, 75, 'sub_menu','transparent')</SCRIPT>
+								</td>
+							</tr>
+							<? include 'left.html';?>	
+						</table>
+
+						<!-- 메인 좌측 끝-->
+					</td>
+					<td width="24"></td>
+					<td valign="top" width="675" valign="top">
+						<!--메인우측 시작-->
+						
+						<table width="676" border="0" cellpadding="0" cellspacing="0">
+							<tr height="10">
+								<td></td>
+							</tr>
+							<tr height="24">
+								<td>
+									<table width="676" border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td width="22">
+												<img src="images/sub_title_dot.gif" alt="">
+											</td>
+											<td width="3"></td>
+											<td width="80" class="sub_title">
+												갤러리
+											</td>
+											<td width="4">
+												<img src="images/sub_title_bar.gif" alt="">
+											</td>
+											<td align="right" class="sub_navi">
+												홈 > 갤러리
+											</td>
+										</tr>
+									</table>	
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<img src="images/sub_main_bar.gif" alt=""></td>
+							</tr>
+							<tr>
+								<td valign="top">
+									<!-- 서브 메인 시작 -->
+									
+									 <table width="676" border="0" cellspacing="0" cellpadding="0">
+									   <tr height="5">
+										 <td></td>
+									   </tr>
+										<?
+											if($t_count==0){
+										?>
+								<!-- 게시물 없음 시작-->          
+									<tr>
+										 <td  style="padding:10,0,10,0">
+										<div align="center">등록된 이미지가 없습니다.</div>
+										</td>
+									</tr>
+								  <!-- 게시물 없음 끝-->
+								<?
+									}else{
+									?>
+
+
+
+									   <!-- 리스트 전체 시작-->
+									   <tr>
+										 <td  style="padding:10,0,10,0">
+										 <table width="660" border="0" cellspacing="0" cellpadding="0">
+										 <!-------------------한줄 시작---------------------------------------->
+											 <tr>
+											<?
+												$startNo=$t_count-(($page - 1) * $listPerPage);
+												$counter=0;
+												while($list = mysql_fetch_array($result)){
+											?>
+
+											 <!---------------------------하나 시작------------------------------------>
+											   <td width="160" >
+												<table width="160" border="0" cellspacing="0" cellpadding="0">
+												   <tr>
+													 <td width="160" height="15"><img src="./images/bbs/Gbox_01.gif"></td>
+												   </tr>
+												   <tr>
+													 <td align="center" background="./images/bbs/Gbox_03gif.gif">
+														<table width="140" border="0" cellspacing="0" cellpadding="0">
+														 <tr>
+														   <td width="20" height="20" valign="top"><img src="./images/bbs/Gtitle_03.gif"></td>
+														   <td width="20" valign="bottom" class="board01" style="padding-bottom:6"><?=$startNo?></td>
+														   <td width="100" align="right" valign="bottom" class="board01" style="padding-bottom:6">(<?=substr($list[regdate],0,10)?>)</td>
+														 </tr>
+														 <tr>
+														   <td colspan="3">
+																<a href="gallery_view.html?page=<?=$page?>&idx=<?=$list[idx]?>&search=<?=$search?>&searchkey=<?=$searchkey?>">
+																<?
+																	if($list[path1]){
+																		echo "<img src=\"./files/photo/".urlencode($list[path1])."\" width=\"140\" height=\"130\">";
+											
+																	}else{
+																		echo "<img src=\"./images/bbs/noimg.jpg\" width=\"140\" height=\"130\">";
+																	}
+																?>
+																</a>
+															</td>
+														 </tr>
+														 <tr>
+														   <td height="28" colspan="2" valign="bottom" class="gray_1px" style="padding-bottom:5"><img src="./images/bbs/Gtitle_01.gif"></td>
+														   <td height="28" valign="bottom" class="board02 ; gray_1px" style="padding-bottom:2"><?=$list[name]?></td>
+														 </tr>
+														 <tr>
+														   <td height="25" colspan="2"  valign="top"  style="padding-top:5"><img src="./images/bbs/Gtitle_02.gif" ></td>
+														   <td width="100" height="25"  valign="top" class="board02"  style="padding-top:6">
+																<a href="gallery_view.html?page=<?=$page?>&idx=<?=$list[idx]?>&search=<?=$search?>&searchkey=<?=$searchkey?>">
+																	<?=cutstr($list[subject],14)?>
+																</a>
+															</td>
+														 </tr>
+													 </table>
+													</td>
+												   </tr>
+												   <tr>
+													 <td><img src="./images/bbs/Gbox_02.gif"></td>
+												   </tr>
+											   </table>
+											 </td>
+											 <td width="5">&nbsp;</td>
+											 <!---------------------------하나 끝------------------------------------>
+											 
+											 <?
+											$counter++;
+											if($counter%4==0){
+												echo "</tr><tr>";
+											}
+											$startNo--;
+										}				//while 끝
+
+										$blankCount=4-($counter%4);
+										if($blankCount<4){
+											for($i=0;$i<$blankCount;$i++){
+												?>
+											<!--게시물 하나 시작------------------------------------------------------------------------>
+											<td width="160" style="padding:10,0,10,0">
+											  &nbsp;
+											</td>
+											<td width="5">&nbsp;</td>
+											<!--게시물 하나 끝------------------------------------------------------------------------>
+											
+												<?
+											}
+										}
+
+										?>
+										</tr>
+										<!-------------------한줄 끝---------------------------------------->
+									</table>
+										<?
+									}
+								?>  
+											
+										</td>
+									   </tr>
+									   <!-- 리스트  전체 끝-->
+										
+									   <form name="frm" method="post" action="<?=$PHP_SELF?>">
+										<tr>
+										  <td height="50" align="center" style="padding:20 0 10 0"><table width="260" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+											  <td width="55"><select name="search" id="select2" class="search_input">
+												  <option value="subject" <?if($search=="subject") echo "SELECTED";?>>제목</option>
+												  <option value="content" <?if($search=="content") echo "SELECTED";?>>내용</option>
+											  </select></td>
+											  <td width="135"><input name="searchkey" type="text" id="search2" size="20" class="search_input" value="<?=$searchkey?>"></td>
+											  <!-- 검색하기 버튼 -->
+											  <td width="54"><img src="./images/bbs/bod_btn_search.gif" width="72" height="22" style="cursor:hand" onClick="document.frm.submit();"></td>
+											</tr>
+										  </table></td>
+										</tr>
+										</form>
+										<tr>
+										  <td height="1" align="center"><img src="./images/bbs/bod_line06.gif"></td>
+										</tr>
+									   <tr>
+										 <td height="40" align="center"><table width="240" border="0" cellspacing="0" cellpadding="0">
+										  <tr>
+											<td width="18">
+												<?
+													if($page!=1){
+												?>
+												<img src="./images/bbs/pprv.gif" style="cursor:hand" onClick="location.href='<?=$PHP_SELF?>?page=1&search=<?=$search?>&searchkey=<?=$searchkey?>'"/>
+												<?
+													}else{
+												?>
+													<img src="./images/bbs/pprv.gif"/>
+												<?
+													}
+												?>
+											</td>
+											<td width="15">
+											<?
+												if($page!=1){
+											?>
+											<img src="./images/bbs/prv.gif" style="cursor:hand" onClick="location.href='<?=$PHP_SELF?>?page=<?=$page-1?>&search=<?=$search?>&searchkey=<?=$searchkey?>'"/>
+											<?
+												}else{
+											?>
+											<img src="./images/bbs/prv.gif"/>
+											<?
+												}
+											?>
+											</td>
+											
+											<td align="center">
+												<?
+													$pagingStart=floor(($page-1)/$pageRange)*$pageRange+1;
+
+													for($i=$pagingStart;$i<$pagingStart+$pageRange;$i++){
+														if($i>$lastpage) break;
+
+														if($i==$page){
+												?>
+												<b><?=$i?></b>
+												<?
+														}else{
+												?>
+													<a href="<?=$PHP_SELF?>?page=<?=$i?>&search=<?=$search?>&searchkey=<?=$searchkey?>"><?=$i?></a>
+												<?
+														}
+													}
+												?>
+											</td>
+											<td width="15">
+												<?
+													if($page!=$lastpage){
+												?>
+												<img src="./images/bbs/nex.gif" style="cursor:hand" onclick="location.href='<?=$PHP_SELF?>?page=<?=$page+1?>&search=<?=$search?>&searchkey=<?=$searchkey?>'"/>
+												 <?
+													}else{
+												?>
+												<img src="./images/bbs/nex.gif"/>
+												<?
+													}
+												?>
+											</td>
+											<td width="18">
+											 <?
+												if($page!=$lastpage){
+											?>
+												<img src="./images/bbs/nnex.gif" style="cursor:hand" onclick="location.href='<?=$PHP_SELF?>?page=<?=$lastpage?>&search=<?=$search?>&searchkey=<?=$searchkey?>'"/>
+											<?
+												}else{
+											?>
+												<img src="./images/bbs/nnex.gif"/>
+											<?
+												}
+											?>
+											</td>
+										  </tr>
+										</table></td>
+									   </tr>
+									   <tr>
+									   <td height="30"></td>
+									   </tr>
+									</table>
+
+									
+									<!-- 서브 메인 끝 -->
+								</td>
+							</tr>
+						</table>	
+
+						<!--메인우측 끝-->
+					</td>
+				</tr>
+			</table>
+		<!-- 메인 바디 끝 -->
+		
+<? include 'bottom.html';?>

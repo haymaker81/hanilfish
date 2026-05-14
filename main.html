@@ -1,0 +1,518 @@
+<? include './admin/include/config.php';?>
+<? include './popup_control.php';?>
+<?
+	$query = "SELECT COUNT(idx) FROM product WHERE  visible='1'";
+	$result = mysql_query($query, $connect);
+	$res = mysql_fetch_row($result);
+	$product_count=$res[0];
+
+	$query = "SELECT COUNT(idx) FROM photo WHERE  visible='1'";
+	$result = mysql_query($query, $connect);
+	$res = mysql_fetch_row($result);
+	$photo_count=$res[0];
+
+	$query = "SELECT idx,cate,subject,path1  \n";
+	$query.= "FROM product WHERE  visible='1' \n";
+	$query.= "ORDER BY idx DESC LIMIT 0,6";
+	$product = mysql_query($query, $connect);
+
+	$query = "SELECT idx,subject,path1  \n";
+	$query.= "FROM photo WHERE  visible='1'  \n";
+	$query.= "ORDER BY idx DESC LIMIT 0,6";
+	$photo = mysql_query($query, $connect);
+
+	$query = "SELECT idx,subject,regdate  \n";
+	$query.= "FROM notice  WHERE  visible='1' \n";
+	$query.= "ORDER BY idx DESC LIMIT 0,5";
+	$notice = mysql_query($query, $connect);
+
+	$query = "SELECT idx,ref,level,step,subject,regdate  \n";
+	$query.= "FROM qna \n";
+	$query.= "ORDER BY ref DESC,step LIMIT 0,5";
+	$qna = mysql_query($query, $connect);
+?>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<SCRIPT language=javascript src="./script/flash_t.js"></SCRIPT>
+<SCRIPT language=javascript src="./include/common.js"></SCRIPT>
+<link href="./css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="1050" border="0" cellpadding="0" cellspacing="0" align="center">
+	<tr height="20">
+		<td></td>
+	</tr>
+	<tr>
+		<td>
+			<table width="900" height="60" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td>
+						<img src="images/logo.gif" width="203" height="60" alt="" border="0" onClick="location.href='/main.html';" style="cursor:hand"></td>
+					<td width="19"></td>
+					<td>
+						<SCRIPT>FlashView_t("./flash/main_flash.swf", 678, 60, 'logo','transparent')</SCRIPT>
+					</td>
+				</tr>
+			</table>	
+		</td>
+	</tr>
+	<tr height="20">
+		<td></td>
+	</tr>
+	<tr>
+		<td>
+			<SCRIPT>FlashView_t("./flash/main.swf", 900, 300, 'main','transparent')</SCRIPT>
+			<!--img src="images/main_img.jpg" width="900" height="300" alt=""></td-->
+	</tr>
+	<tr height="20">
+		<td></td>
+	</tr>
+	<tr>
+		<td width="900" valign="top">
+		
+		<!-- 메인 바디 시작 -->
+			<table width="900" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td valign="top" width="201">
+						<!-- 메인 좌측 시작-->
+
+						<table width="201" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td>
+									<img src="images/main_phone.gif"></td>
+							</tr>
+							<tr height="8">
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="images/main_banking.gif"></td>
+							</tr>
+							<tr height="5">
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="images/main_link_title.gif"></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="images/main_link.gif"></td>
+							</tr>
+						</table>
+
+						<!-- 메인 좌측 끝-->
+					</td>
+					<td width="24"></td>
+					<td valign="top" width="675" valign="top">
+						<!--메인우측 시작-->
+						<table width="675" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="326" valign="top">
+								<!--최신상품 시작-->
+									<table width="326" border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td valign="top"  width="326">
+												<table border="0" cellpadding="0" cellspacing="0">
+													<tr>
+														<td valign="top">
+															<img src="images/main_latest_product_title.gif" height="22" alt="" usemap="#product_map"></td>
+													</tr>
+													<tr>
+														<td align="center">
+															<table  width="315" border="0" cellpadding="0" cellspacing="0">
+																<?
+																	if($product_count==0){
+																?>
+																<!-- 게시물 없음 시작-->          
+																<tr>
+																	 <td  style="padding:10,0,10,0" align="center" valign="top">
+																		등록된 상품이 없습니다.
+																	</td>
+																</tr>
+																<!-- 게시물 없음 끝-->
+																<?
+																	}else{
+																?>
+																<!-------------------한줄 시작---------------------------------------->
+																<tr>
+																<?
+																	$counter=0;
+																	while($list = mysql_fetch_array($product)){
+																?>
+																	<!-- 상품 하나 시작 -->
+																	<td width="105" valign="top" align="center">
+																		<table>
+																			<tr>
+																				<td>
+																					<table cellpadding="1" cellspacing="1" bgcolor="silver" width="95" height="81">
+																						<tr bgcolor="#FFFFFF">
+																							<td align="center"  style="padding:1,1,1,1">
+																								<a href="product_view.html?idx=<?=$list[idx]?>&cate=<?=$list[cate]?>">
+																								<?
+																									if($list[path1]){
+																										echo "<img src=\"./files/$list[cate]/".urlencode($list[path1])."\" width=\"94\" height=\"80\">";
+																			
+																									}else{
+																										echo "<img src=\"./images/bbs/noimg.jpg\" width=\"94\" height=\"80\">";
+																									}
+																								?>
+																								</a>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																			<tr><td align="center" class="sub_map_title">
+																				<a href="product_view.html?idx=<?=$list[idx]?>&cate=<?=$list[cate]?>">
+																				<?=cutstr($list[subject],10)?>
+																				</a>
+																			</td></tr>
+																		</table>
+																	</td>
+																	<!-- 상품 하나 끝 -->
+																<?
+																		$counter++;
+																		if($counter%3==0){
+																			echo "</tr><tr>";
+																		}
+																		$startNo--;
+																	}				//while 끝
+
+																	$blankCount=3-($counter%3);
+																	if($blankCount<3){
+																		for($i=0;$i<$blankCount;$i++){
+																?>
+																	<!--게시물 하나 시작------------------------------------------------------------------------>
+																	<td width="105" valign="top" align="center">
+																	  &nbsp;
+																	</td>
+																	<!--게시물 하나 끝------------------------------------------------------------------------>
+																	
+																<?
+																		}
+																	}
+																?>
+																</tr>
+																<!-------------------한줄 끝---------------------------------------->
+																<?
+																	}
+																?>
+															</table>	
+														</td>
+													</tr>
+													<tr>
+														<td height="11"></td>
+													</tr>
+													<tr valign="top">
+														<td height="23"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>	
+									<!--최신상품 끝-->
+								</td>
+								<td width="25"></td>
+								<td valign="top">
+									<!--포토갤러리 시작-->
+									<table width="326" border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td valign="top"  width="326" valign="top">
+												<table border="0" cellpadding="0" cellspacing="0">
+													<tr>
+														<td>
+															<img src="images/main_photo_title.gif" height="22" alt="" usemap="#photo_map"></td>
+													</tr>
+													<tr>
+														<td align="center">
+															<table  width="315" border="0" cellpadding="0" cellspacing="0">
+																<?
+																	if($photo_count==0){
+																?>
+																<!-- 게시물 없음 시작-->          
+																<tr>
+																	 <td  style="padding:10,0,10,0" align="center" valign="top">
+																		등록된 이미지가 없습니다.
+																	</td>
+																</tr>
+																<!-- 게시물 없음 끝-->
+																<?
+																	}else{
+																?>
+																<!-------------------한줄 시작---------------------------------------->
+																<tr>
+																<?
+																	$counter=0;
+																	while($list = mysql_fetch_array($photo)){
+																?>
+																	<!-- 상품 하나 시작 -->
+																	<td width="105" valign="top" align="center">
+																		<table>
+																			<tr>
+																				<td>
+																					<table cellpadding="1" cellspacing="1" bgcolor="silver" width="95" height="81">
+																						<tr bgcolor="#FFFFFF">
+																							<td align="center"  style="padding:1,1,1,1">
+																								<a href="gallery_view.html?idx=<?=$list[idx]?>">
+																								<?
+																									if($list[path1]){
+																										echo "<img src=\"./files/photo/".$list[path1]."\" width=\"94\" height=\"80\">";
+																			
+																									}else{
+																										echo "<img src=\"./images/bbs/noimg.jpg\" width=\"94\" height=\"80\">";
+																									}
+																								?>
+																								</a>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																			<tr><td align="center" class="sub_map_title">
+																				<a href="gallery_view.html?idx=<?=$list[idx]?>">
+																				<?=cutstr($list[subject],10)?>
+																				</a>
+																			</td></tr>
+																		</table>
+																	</td>
+																	<!-- 상품 하나 끝 -->
+																<?
+																		$counter++;
+																		if($counter%3==0){
+																			echo "</tr><tr>";
+																		}
+																		$startNo--;
+																	}				//while 끝
+
+																	$blankCount=3-($counter%3);
+																	if($blankCount<3){
+																		for($i=0;$i<$blankCount;$i++){
+																?>
+																	<!--게시물 하나 시작------------------------------------------------------------------------>
+																	<td width="105" valign="top" align="center">
+																	  &nbsp;
+																	</td>
+																	<!--게시물 하나 끝------------------------------------------------------------------------>
+																	
+																<?
+																		}
+																	}
+																?>
+																</tr>
+																<!-------------------한줄 끝---------------------------------------->
+																<?
+																	}
+																?>
+															</table>	
+														</td>
+													</tr>
+													<tr>
+														<td height="11"></td>
+													</tr>
+													<tr valign="top">
+														<td height="23"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>	
+									<!--포토갤러리 끝-->
+								</td>
+							</tr>
+							<tr>
+								<td width="326" valign="top">
+								<!--공지사항 시작-->
+									<table width="326" border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td valign="top"  width="326">
+												<table border="0" cellpadding="0" cellspacing="0">
+													<tr>
+														<td>
+															<img src="images/main_notice_title.gif" height="28" alt="" usemap="#notice_map"></td>
+													</tr>
+													<tr>
+														<td valign="top" >
+															<img src="images/main_bbs_bar.gif" height="3" alt=""></td>
+													</tr>
+													<tr>
+														<td>
+															<img src="images/main_bbs_row.gif" height="8" alt=""></td>
+													</tr>
+													<tr>
+														<td>
+															<table width="326" height="18" border="0" cellpadding="0" cellspacing="0">
+															<?
+																for($i=0;$i<5;$i++){
+																	$list = mysql_fetch_array($notice);
+																	if($list){
+															?>
+																<tr height="18">
+																	<td width="9">
+																		<img src="images/main_bbs_left_bar.gif"></td>
+																	<td width="12">
+																		<img src="images/main_bbs_dot.gif"></td>
+																	<td width="220">
+																		<a href="notice_view.html?idx=<?=$list[idx]?>"><?=cutstr($list[subject],33)?></a>
+																	</td>
+																	<td width="76">
+																		<?=substr($list[regdate],0,10)?>
+																	</td>
+																	<td width="9">
+																		<img src="images/main_bbs_right_bar.gif"></td>
+																</tr>
+															<?
+																	}else{
+																		if($i==0){
+															?>
+																<tr height="18">
+																	<td width="9">
+																		<img src="images/main_bbs_left_bar.gif"></td>
+																	<td colspan="3" align="center">
+																		등록된 공지사항이 없습니다.
+																	</td>
+																	<td width="9">
+																		<img src="images/main_bbs_right_bar.gif"></td>
+																</tr>
+															<?
+																		}else{
+															?>
+																<tr height="18">
+																	<td width="9">
+																		<img src="images/main_bbs_left_bar.gif"></td>
+																	<td colspan="3" align="center"></td>
+																	<td width="9">
+																		<img src="images/main_bbs_right_bar.gif"></td>
+																</tr>
+															<?
+																		}
+																	}
+																}
+															?>
+															</table>	
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<img src="images/main_bbs_bottom.gif" height="11" alt=""></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>	
+									<!--공지사항 끝-->
+								</td>
+								<td width="25"></td>
+								<td valign="top">
+									<!--QNA 시작-->
+									<table width="326" border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td valign="top"  width="326">
+												<table border="0" cellpadding="0" cellspacing="0">
+													<tr>
+														<td>
+															<img src="images/main_qna_title.gif" height="28" alt="" usemap="#qna_map"></td>
+													</tr>
+													<tr>
+														<td valign="top" >
+															<img src="images/main_bbs_bar.gif" height="3" alt=""></td>
+													</tr>
+													<tr>
+														<td>
+															<img src="images/main_bbs_row.gif" height="8" alt=""></td>
+													</tr>
+													<tr>
+														<td>
+															<table width="326" height="18" border="0" cellpadding="0" cellspacing="0">
+																<?
+																	for($i=0;$i<5;$i++){
+																		$list = mysql_fetch_array($qna);
+																		if($list){
+																?>
+																	<tr height="18">
+																		<td width="9">
+																			<img src="images/main_bbs_left_bar.gif"></td>
+																		<td width="12">
+																			<img src="images/main_bbs_dot.gif"></td>
+																		<td width="220">
+																		<?
+																			if($list[level]>0){
+																				for($j=0 ; $j<$list[level];$j++){
+																					echo  "&nbsp;&nbsp;&nbsp;";
+																				}
+																				echo "<img src='./images/bbs/bod_re_icon.gif'>";
+																			}
+																		 ?>
+																			<a href="qna_view.html?idx=<?=$list[idx]?>&ref=<?=$list[ref]?>&level=<?=$list[level]?>&step=<?=$list[step]?>"><?=cutstr($list[subject],33)?></a>
+																		</td>
+																		<td width="76">
+																			<?=substr($list[regdate],0,10)?>
+																		</td>
+																		<td width="9">
+																			<img src="images/main_bbs_right_bar.gif"></td>
+																	</tr>
+																<?
+																		}else{
+																			if($i==0){
+																?>
+																	<tr height="18">
+																		<td width="9">
+																			<img src="images/main_bbs_left_bar.gif"></td>
+																		<td colspan="3" align="center">
+																			등록된 Q & A가 없습니다.
+																		</td>
+																		<td width="9">
+																			<img src="images/main_bbs_right_bar.gif"></td>
+																	</tr>
+																<?
+																			}else{
+																?>
+																	<tr height="18">
+																		<td width="9">
+																			<img src="images/main_bbs_left_bar.gif"></td>
+																		<td colspan="3" align="center"></td>
+																		<td width="9">
+																			<img src="images/main_bbs_right_bar.gif"></td>
+																	</tr>
+																<?
+																			}
+																		}
+																	}
+																?>
+															</table>	
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<img src="images/main_bbs_bottom.gif" height="11" alt=""></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>	
+									<!--QNA 끝-->
+								</td>
+							</tr>
+						</table>	
+						<!--메인우측 끝-->
+					</td>
+				</tr>
+			</table>
+		<!-- 메인 바디 끝 -->
+<map name="product_map">
+  <area shape="rect" coords="275,0,324,26" href="product.html" />
+</map>
+
+<map name="photo_map">
+  <area shape="rect" coords="275,0,324,26" href="gallery.html" />
+</map>
+
+<map name="notice_map">
+  <area shape="rect" coords="275,8,317,26" href="notice.html" />
+</map>
+
+<map name="qna_map">
+  <area shape="rect" coords="276,8,317,25" href="qna.html" />
+</map>
+<? include 'bottom.html';?>
