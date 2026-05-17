@@ -360,23 +360,16 @@
     overflow: hidden;
     border-radius: var(--r);
     background: #fff0e3;
-    height: 420px;
+    height: 380px;
   }
   .map-frame {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     border: 0;
+    display: block;
   }
   @media (min-width: 760px) {
-    .map-wrap { height: 560px; }
-    /* 데스크톱: 네이버 신지도 좌측 검색 패널(약 390px) 영역을 시각적으로 잘라낸다 */
-    .map-frame {
-      left: -390px;
-      width: calc(100% + 390px);
-    }
+    .map-wrap { height: 540px; }
   }
 
   /* Intro */
@@ -507,13 +500,14 @@
     </div>
     <div class="map-wrap" style="margin-top: 20px;">
       <iframe class="map-frame"
-              title="네이버 지도 - 한일양어장"
-              src="https://map.naver.com/p/search/%EA%B2%BD%EB%82%A8%20%EA%B9%80%ED%95%B4%EC%8B%9C%20%EC%A7%84%EB%A1%80%EB%A9%B4%20%EC%86%A1%ED%98%84%EB%A6%AC%20420?c=15.00,0,0,0,sh"
+              title="구글 지도 - 한일양어장"
+              src="https://maps.google.com/maps?q=%EA%B2%BD%EB%82%A8%20%EA%B9%80%ED%95%B4%EC%8B%9C%20%EC%A7%84%EB%A1%80%EB%A9%B4%20%EC%86%A1%ED%98%84%EB%A6%AC%20420&t=h&z=17&hl=ko&output=embed"
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
     </div>
     <p style="font-size: 12px; color: var(--c-muted); margin: 8px 2px 0;">
-      ※ 지도가 보이지 않으면 위의 "네이버 지도에서 보기" 버튼을 눌러주세요.
+      ※ 지도가 보이지 않으면 위의 "네이버 지도에서 보기" 또는 "카카오맵" 버튼을 눌러주세요.
     </p>
   </section>
 
