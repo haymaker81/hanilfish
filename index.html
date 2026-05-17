@@ -452,7 +452,7 @@
 </header>
 
 <section class="hero" id="home">
-  <h1>60년 전통, 한일양어장</h1>
+  <h1>70년 전통, 한일양어장</h1>
   <p>비단잉어 · 금붕어 · 잉어 · 향어 · 수초 · 연못 시공 전문</p>
   <div class="hero-chips">
     <span class="chip">📞 055-345-3539</span>
@@ -558,6 +558,14 @@
 <script>
 (function () {
   const data = window.SITE_DATA || { products: [], photos: [], notices: [], categories: [], intro: '' };
+
+  // 이미지가 실제로 존재하는 상품만 노출 (썸네일이 "이미지 없음"으로 표시되는 항목 제외)
+  data.products = data.products.filter(p =>
+    p.existing_paths && p.existing_paths.length > 0
+  );
+
+  // 갤러리에서 제외할 항목
+  data.photos = data.photos.filter(p => !/삼영화학/.test(p.subject));
 
   // ---------- helpers ----------
   function escapeHTML(s) {
