@@ -213,12 +213,6 @@
     font-size: 13px;
     font-weight: 850;
   }
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 24px;
-  }
   .btn {
     display: inline-flex;
     align-items: center;
@@ -260,20 +254,6 @@
   .hero-card-body { padding: 18px; }
   .hero-card-title { margin: 0; font-size: 17px; font-weight: 900; }
   .hero-card-text { margin: 6px 0 0; color: rgba(255, 255, 255, .76); font-size: 13px; }
-  .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 20px;
-  }
-  .stat {
-    padding: 14px;
-    border: 1px solid rgba(255, 255, 255, .18);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, .10);
-  }
-  .stat strong { display: block; font-size: 19px; line-height: 1.1; }
-  .stat span { display: block; margin-top: 4px; color: rgba(255, 255, 255, .72); font-size: 12px; }
 
   .container {
     position: relative;
@@ -568,32 +548,51 @@
     .map-wrap, .map-frame { min-height: 420px; }
   }
   @media (max-width: 760px) {
-    .header-inner { width: min(100% - 24px, var(--max)); min-height: 68px; }
+    section { scroll-margin-top: 78px; }
+    .header-inner { width: min(100% - 24px, var(--max)); min-height: 64px; }
     .nav-toggle { display: inline-grid; place-items: center; }
     .nav {
       position: absolute;
-      top: 74px;
+      top: 70px;
       left: 12px;
       right: 12px;
       display: none;
       align-items: stretch;
-      border-radius: 20px;
+      border-radius: 18px;
       background: rgba(255, 250, 242, .96);
       box-shadow: var(--shadow-soft);
     }
     .nav.open { display: grid; }
-    .nav a { padding: 13px 15px; }
-    .brand-logo { width: 42px; height: 42px; border-radius: 15px; }
-    .hero { width: min(100% - 24px, var(--max)); margin-top: 18px; border-radius: 28px; }
-    .hero-inner { min-height: auto; padding: 34px 22px; }
-    .hero-stats { grid-template-columns: 1fr; }
-    .container { width: min(100% - 24px, var(--max)); padding-top: 44px; }
-    .section-head { display: block; }
-    .section-desc { margin-top: 12px; }
-    .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .filters { top: 76px; border-radius: 18px; }
-    .story-card, .intro-content, .contact-card { padding: 20px; }
-    .info-row { grid-template-columns: 1fr; gap: 3px; }
+    .nav a { padding: 11px 14px; }
+    .brand-logo { width: 40px; height: 40px; border-radius: 14px; }
+    .brand-title { font-size: 16px; }
+    .brand-sub { font-size: 11px; }
+    .hero { width: min(100% - 20px, var(--max)); margin-top: 12px; border-radius: 24px; }
+    .hero-inner {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding: 24px 20px;
+    }
+    .hero h1 { font-size: clamp(32px, 11vw, 44px); }
+    .hero-copy { margin-top: 14px; font-size: 15px; line-height: 1.55; }
+    .hero-contact { margin-top: 16px; gap: 7px; }
+    .hero-contact span { min-height: 32px; padding: 6px 10px; font-size: 12px; }
+    .hero-card { display: none; }
+    .container { width: min(100% - 20px, var(--max)); padding-top: 30px; }
+    .section-head { display: block; margin-bottom: 16px; }
+    .section-title { font-size: 27px; }
+    .section-desc { margin-top: 8px; font-size: 14px; }
+    .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .filters { top: 72px; gap: 6px; padding: 8px; border-radius: 16px; }
+    .filter-btn { padding: 7px 10px; font-size: 12px; }
+    .product-card { border-radius: 18px; }
+    .product-info { padding: 11px 12px 13px; }
+    .product-name { min-height: 38px; font-size: 14px; }
+    .story-card, .intro-content, .contact-card { padding: 16px; }
+    .story-card strong { font-size: 28px; }
+    .intro-content { font-size: 14px; line-height: 1.65; }
+    .info-row { grid-template-columns: 1fr; gap: 3px; padding: 10px 0; }
+    .map-wrap, .map-frame { min-height: 340px; }
   }
   @media (max-width: 460px) {
     .product-grid { grid-template-columns: 1fr; }
@@ -653,16 +652,6 @@
         <span>전화 055-345-3539</span>
         <span>휴대전화 010-3569-3539</span>
         <span>농협 890-02-010381 박복만</span>
-      </div>
-      <div class="hero-actions">
-        <a class="btn" href="tel:055-345-3539">전화 문의</a>
-        <a class="btn secondary" href="#products">상품 보기</a>
-        <a class="btn secondary" href="#location">오시는 길</a>
-      </div>
-      <div class="hero-stats" aria-label="한일양어장 주요 정보">
-        <div class="stat"><strong>70년</strong><span>관상어 양식 역사</span></div>
-        <div class="stat"><strong>3,000평</strong><span>김해 진례 양어장</span></div>
-        <div class="stat"><strong>10,000평</strong><span>합천 제2양어장</span></div>
       </div>
     </div>
     <aside class="hero-card" aria-label="대표 상품 이미지">
