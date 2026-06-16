@@ -1,0 +1,23 @@
+{
+  "nodes": [
+    {
+      "id": "data",
+      "label": "data.js",
+      "file_type": "code",
+      "source_file": "data.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme",
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "links": []
+}
